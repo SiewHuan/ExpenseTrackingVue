@@ -5,19 +5,18 @@
               <div class="modal-container">
   
                 
-                <div v-if="transaction.id == null" class="modal-header">
+                <h3 v-if="transaction.id == null" class="modal-header">
                     Add New Item
-                </div>
-                <div v-else> 
+                </h3>
+                <h3 v-else class="modal-header"> 
                     Edit Item
-                </div>
+                </h3>
   
                 <div class="modal-body">
                   <slot name="body">
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Date Time</label>
                       <div class="col-sm-9">
-                        <!-- <vue-date-pick v-model="transaction.datetime" :pickTime="true" :format="'YYYY-MM-DD HH:mm'" ></vue-date-pick> -->
                         <datetime v-model="transaction.datetime" type="datetime" input-class="form-control"></datetime>
                       </div>
                   </div>     
@@ -63,8 +62,6 @@
 </template>
 
 <script>
-// import vueDatePick from 'vue-date-pick';
-// import 'vue-date-pick/dist/vueDatePick.css';
 import { Datetime } from 'vue-datetime'
 import 'vue-datetime/dist/vue-datetime.css'
 
@@ -72,7 +69,6 @@ import 'vue-datetime/dist/vue-datetime.css'
 export default {
     name: 'TransactionModal',
     components: {
-        //vueDatePick
         Datetime
     },
     props: ['transaction'],
@@ -84,8 +80,7 @@ export default {
         },
     data(){
       return {
-        categoryoptions:['Food', 'Transportation','Bills', 'Health', 'Travel'
-        ]
+        categoryoptions:['Food', 'Transportation','Bills', 'Health', 'Travel']
       }
     }
 }

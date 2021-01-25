@@ -1,36 +1,48 @@
 <template>
     <div class="card mt-5"> 
                     <h3 class="card-header">{{header}}</h3> 
-                    <table class="table" :class="[{'table-dark': false}]"> 
-                        <thead class="thead-dark"> 
-                            <th>#</th> 
-                            <th>Item</th> 
-                            <th>Category</th> 
-                            <th>Date Time</th> 
-                            <th>Amount</th> 
+                     <SortedTable :values="expenses">
+      <thead >
+        <tr>
+            <th></th> 
+          <th scope="col" >
+            <SortLink name="item">Item</SortLink>
+          </th>
+          <th scope="col" >
+            <SortLink name="category">Category</SortLink>
+          </th>
+          <th scope="col" >
+            <SortLink name="datetime">Date Time</SortLink>
+          </th>
+          <th scope="col" >
+            <SortLink name="amount">Amount</SortLink>
+          </th>
+          <th></th>
                             <th></th>
-                            <th></th>
-                        </thead> 
-                        <tbody is="transition-group" name="neo-list" v-cloak> 
-                            <tr v-for="(a, index) in expenses" 
-                                :key="a.id" >
-                                <td>{{index + 1}}</td> 
+        </tr>
+      </thead>
+      <tbody slot="body" slot-scope="sort">
+        <tr v-for="(a,index) in sort.values" :key="a.id">
+           <td>{{index + 1}}</td> 
                                 <td>{{a.item}}</td> 
                                 <td>{{a.category}}</td> 
                                 <td>{{ a.datetime | dayFormat}}</td> 
                                 <td>{{a.amount}}</td> 
                                 <td><button class="btn btn-outline-success" @click="edit(a)">Edit</button></td>
                                 <td><button class="btn btn-outline-danger" @click="remove(index)">Remove</button></td> 
-                             </tr> 
-                        </tbody> 
-                    </table> 
+        </tr>
+      </tbody>
+    </SortedTable>
                 </div>  
 </template>
 
 <script>
+
 var dayjs = require('dayjs');
 var isBetween = require('dayjs/plugin/isBetween');
 dayjs.extend(isBetween);
+
+
 
 export default {
   name: 'Grid',

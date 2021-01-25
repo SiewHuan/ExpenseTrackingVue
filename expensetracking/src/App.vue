@@ -118,7 +118,7 @@ export default {
           },
         },
         title: {
-          text: "Expenses",
+          text: "Past 12 Months Expenses",
         },
         xAxis: {
           type: "category",
