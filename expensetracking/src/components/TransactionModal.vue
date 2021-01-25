@@ -35,7 +35,7 @@
         <span class="fa" :class="option.icon"></span>
         {{ option.title }}
     </template> -->
-      <option v-for="(a) in categoryoptions" :key="a.value"><span></span>{{a.value}}</option>
+      <option v-for="(a) in categoryoptions" :key="a.value">{{a}}</option>
   <!-- <option disabled value="">Please select one</option>
   <option>A</option>
   <option>B</option>
@@ -89,11 +89,7 @@ export default {
         },
     data(){
       return {
-        categoryoptions:[
-          {
-            icon: 'fa-pencil',
-            value: 'food'
-          }
+        categoryoptions:['Food', 'Transportation','Bills', 'Health', 'Travel'
         ]
       }
     }
