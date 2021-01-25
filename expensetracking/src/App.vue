@@ -29,7 +29,10 @@ import TransactionModal from "./components/TransactionModal.vue";
 //import { Chart } from "highcharts-vue";
 import columnchart from "./components/Chart.vue";
 //var moment = require('moment');
-var dayjs = require('dayjs')
+var dayjs = require('dayjs');
+var isBetween = require('dayjs/plugin/isBetween');
+dayjs.extend(isBetween);
+
 
 export default {
   name: "App",
@@ -117,25 +120,25 @@ export default {
       var totalstart =  dayjs().subtract(12, 'month');
       //var totalend = moment();
       var list = [];
-      for(var m=0; m<12; m++){
+      for(var m=1; m<=12; m++){
         var d = totalstart.add(m, 'month');
         var month = {
           start: dayjs(d).startOf('month'),
           end: dayjs(d).endOf('month'),
-          label: d.format('YY MMM'),
+          label: d.format('MMM YY'),
           sum: 0
         }
         list.push(month);
       }
-      this.expenses.forEach((i, obj)=>{
-        list.forEach((j, mon)=>{
-          if(obj.datetime >mon.start && obj.datetime < mon.end){
+      this.expenses.forEach((obj)=>{
+        list.forEach((mon)=>{
+          if(dayjs(obj.datetime).isBetween(mon.start, mon.end)){
             mon.sum += obj.amount;
         }
         });
         
       });
-      list.forEach((i, obj)=>{
+      list.forEach((obj)=>{
         result.push([obj.label, obj.sum]);
       });
       return result;
