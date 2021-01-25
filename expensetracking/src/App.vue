@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-dark bg-dark">
   <div class="container-fluid">
-    <span class="navbar-brand mb-0 h1">Expense Tracking App</span>
+    <span class="navbar-brand mb-0 ml-5 h1">Expense Tracking App</span>
   </div>
 </nav>
   <div class="container">
@@ -10,7 +10,7 @@
     <!-- <img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <div class="card m-3">
-      <button id="show-modal" @click="addnew()" class="btn btn-primary">Add Transaction</button>
+      <button id="show-modal" @click="addnew()" class="btn btn-outline-success">Add Transaction</button>
       <TransactionModal
         v-if="showModal"
         @close="showModal = false"
@@ -19,11 +19,11 @@
       />
     </div>
     <!-- <highcharts :options="chartOptions"></highcharts> -->
-    <columnchart :seriesdata="seriesdata" :chartdata="chartdata"></columnchart>>
+    <columnchart :seriesdata="seriesdata" :chartdata="chartdata"></columnchart>
     <Grid
       @remove="remove"
       :expenses="expenses"
-      header="Expenses"
+      header="Transaction Records"
       @openmodal="openmodal"
     />
   </div>
@@ -35,9 +35,7 @@
 //import HelloWorld from './components/HelloWorld.vue'
 import Grid from "./components/Grid.vue";
 import TransactionModal from "./components/TransactionModal.vue";
-//import { Chart } from "highcharts-vue";
 import columnchart from "./components/Chart.vue";
-//var moment = require('moment');
 var dayjs = require('dayjs');
 var isBetween = require('dayjs/plugin/isBetween');
 dayjs.extend(isBetween);
@@ -49,11 +47,11 @@ export default {
     //HelloWorld,
     Grid,
     TransactionModal,
-    //highcharts: Chart,
     columnchart,
   },
   data() {
     return {
+      //dummy data
       expenses: [
         {
           id: "89qotnkwee9",
@@ -77,50 +75,10 @@ export default {
         category: null,
         item: null,
       },
-      showModal: false,
-      // chartOptions: {
-      //   chart: {
-      //     type: "column",
-      //     animation: {
-      //       duration: 1000,
-      //     },
-      //   },
-      //   title: {
-      //     text: "Expenses",
-      //   },
-      //   xAxis: {
-      //     type: "category",
-      //   },
-      //   yAxis: {
-      //     min: 0,
-      //     title: {
-      //       text: "Total Expenses",
-      //     },
-      //   },
-      //   legend: {
-      //     enabled: false,
-      //   },
-      //   series: [
-      //     {
-      //       data: this.seriesdata,
-      //       //data: [1, 2, 3], // sample data
-      //     },
-      //   ],
-      // },
+      showModal: false
     };
   },
-  created: function() {
-    this.fetchExpenses();
-    // this.chartOptions.series[0].data = [
-    //   ['Shanghai', 24.2],
-    //   ['Beijing', 20.8],
-    //   ['Karachi', 14.9],
-    //   ['Shenzhen', 13.7],
-    //   ['Guangzhou', 13.1],
-    //   ['Istanbul', 12.7],
-    //   ['Mumbai', 12.4]
-    // ];
-  },
+
   computed: {
     seriesdata() {
       var result = [

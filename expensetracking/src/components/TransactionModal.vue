@@ -14,22 +14,52 @@
   
                 <div class="modal-body">
                   <slot name="body">
-                    <input type="text" class="form-control" placeholder="Item" v-model="transaction.item">
-                    <input type="text" class="form-control" placeholder="Category" v-model="transaction.category">                  
-                    <date-pick v-model="transaction.datetime" 
-        :pickTime="true"
-        :format="'YYYY-MM-DD HH:mm'"></date-pick>
-                    <input type="number" step="0.01" min="0.01" class="form-control" placeholder="Amount" v-model="transaction.amount">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Date Time</label>
+                      <div class="col-sm-9">
+                        <date-pick v-model="transaction.datetime" :pickTime="true" :format="'YYYY-MM-DD HH:mm'"></date-pick>
+                      </div>
+                  </div>     
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Item</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="Item" v-model="transaction.item">
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Category</label>
+                      <div class="col-sm-9">
+                        <!-- <input type="text" class="form-control" placeholder="Category" v-model="transaction.category"> -->
+                        <select v-model="transaction.category" class="form-control" :categoryoptions="categoryoptions">
+    <!-- <template slot="option" slot-scope="option">
+        <span class="fa" :class="option.icon"></span>
+        {{ option.title }}
+    </template> -->
+      <option v-for="(a) in categoryoptions" :key="a.value"><span></span>{{a.value}}</option>
+  <!-- <option disabled value="">Please select one</option>
+  <option>A</option>
+  <option>B</option>
+  <option>C</option> -->
+</select>
+                      </div>
+                  </div>
+                        
+                  <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Amount</label>
+                      <div class="col-sm-9">
+                       <input type="number" step="0.01" min="0.01" class="form-control" placeholder="Amount" v-model="transaction.amount">
+                      </div>
+                  </div>                     
                   </slot>
                 </div>
   
                 <div class="modal-footer">
                   <slot name="footer">
-                    <button class="modal-default-button" @click="addTransaction()">
+                    <button class="btn btn-outline-success" @click="addTransaction()">
                        <span v-if="transaction.id == null">Add</span>
                        <span v-else>Save</span>
                       </button>
-                    <button class="modal-default-button" @click="$emit('close')">
+                    <button class="btn btn-outline-primary" @click="$emit('close')">
                       Cancel
                     </button>
                   </slot>
@@ -56,7 +86,17 @@ export default {
                 this.$emit('close');
                 this.$emit('addtransaction');    
             }
-        }
+        },
+    data(){
+      return {
+        categoryoptions:[
+          {
+            icon: 'fa-pencil',
+            value: 'food'
+          }
+        ]
+      }
+    }
 }
 </script>
 
@@ -79,7 +119,7 @@ export default {
   }
   
   .modal-container {
-    width: 300px;
+    width: 600px;
     margin: 0px auto;
     padding: 20px 30px;
     background-color: #fff;
@@ -97,19 +137,6 @@ export default {
   .modal-body {
     margin: 20px 0;
   }
-  
-  .modal-default-button {
-    float: right;
-  }
-  
-  /*
-   * The following styles are auto-applied to elements with
-   * transition="modal" when their visibility is toggled
-   * by Vue.js.
-   *
-   * You can easily play with the modal transition by editing
-   * these styles.
-   */
   
   .modal-enter {
     opacity: 0;
