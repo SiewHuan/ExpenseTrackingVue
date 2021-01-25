@@ -3,9 +3,10 @@
     <div >
       <highcharts
         class="chart"
-        :options="chartOptions"
+        :options="chartdata"
         :updateArgs="updateArgs"
         ref="chart"
+        :seriesdata="seriesdata"
       ></highcharts>
       <button @click="addSeries">Add new series</button>
     </div>
@@ -20,7 +21,10 @@ export default {
     components: {   
     highcharts: Chart
   },
-  props:['seriesdata'],
+  props:['seriesdata','chartdata'],
+  watch:{
+    seriesdata(){this.redraw()}
+  },
   data() {
     return {
       updateArgs: [true, true, true],
@@ -85,6 +89,10 @@ export default {
         name: "Series 2",
         data: [11, 22, 33, 44, 55, 66]
       });
+      this.chartOptions.series[0] = this.seriesdata;
+    },
+    redraw(){
+      this.chartOptions.series[0] = this.seriesdata;
     }
   }
 };

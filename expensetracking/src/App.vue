@@ -1,9 +1,16 @@
 <template>
   <div id="app">
+    <nav class="navbar navbar-light bg-light">
+  <div class="container-fluid">
+    <span class="navbar-brand mb-0 h1">Expense Tracking App</span>
+  </div>
+</nav>
+  <div class="container">
+
     <!-- <img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <div class="card">
-      <button id="show-modal" @click="addnew()">Add Transaction</button>
+    <div class="card m-3">
+      <button id="show-modal" @click="addnew()" class="btn btn-primary">Add Transaction</button>
       <TransactionModal
         v-if="showModal"
         @close="showModal = false"
@@ -12,13 +19,15 @@
       />
     </div>
     <!-- <highcharts :options="chartOptions"></highcharts> -->
-    <columnchart :seriesdata="seriesdata"></columnchart>>
+    <columnchart :seriesdata="seriesdata" :chartdata="chartdata"></columnchart>>
     <Grid
       @remove="remove"
       :expenses="expenses"
       header="Expenses"
       @openmodal="openmodal"
     />
+  </div>
+    
   </div>
 </template>
 
@@ -133,7 +142,7 @@ export default {
       this.expenses.forEach((obj)=>{
         list.forEach((mon)=>{
           if(dayjs(obj.datetime).isBetween(mon.start, mon.end)){
-            mon.sum += obj.amount;
+           mon.sum = parseInt( mon.sum) + parseInt( obj.amount);
         }
         });
         
@@ -143,6 +152,38 @@ export default {
       });
       return result;
     },
+    chartdata(){
+      var result = {
+        chart: {
+          type: "column",
+          animation: {
+            duration: 1000,
+          },
+        },
+        title: {
+          text: "Expenses",
+        },
+        xAxis: {
+          type: "category",
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: "Total Expenses",
+          },
+        },
+        legend: {
+          enabled: false,
+        },
+        series: [
+          {
+            data: this.seriesdata ,
+            //data: [1, 2, 3], // sample data
+          },
+        ]
+      }
+      return result;
+    }
   },
   methods: {
     fetchExpenses: function() {},
@@ -199,7 +240,7 @@ function makeid(length) {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /* margin-top: 60px; */
 }
 [v-cloak] {
   display: none;
