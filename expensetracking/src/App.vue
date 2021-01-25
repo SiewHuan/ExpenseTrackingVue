@@ -28,7 +28,8 @@ import Grid from "./components/Grid.vue";
 import TransactionModal from "./components/TransactionModal.vue";
 //import { Chart } from "highcharts-vue";
 import columnchart from "./components/Chart.vue";
-var moment = require('moment');
+//var moment = require('moment');
+var dayjs = require('dayjs')
 
 export default {
   name: "App",
@@ -113,14 +114,14 @@ export default {
       var result = [
         
       ];
-      var totalstart =  moment().subtract(12, 'month');
+      var totalstart =  dayjs().subtract(12, 'month');
       //var totalend = moment();
       var list = [];
       for(var m=0; m<12; m++){
         var d = totalstart.add(m, 'month');
         var month = {
-          start: moment(d).startOf('month'),
-          end: moment(d).endOf('month'),
+          start: dayjs(d).startOf('month'),
+          end: dayjs(d).endOf('month'),
           label: d.format('YY MMM'),
           sum: 0
         }
