@@ -17,7 +17,7 @@
                                 <td>{{index + 1}}</td> 
                                 <td>{{a.item}}</td> 
                                 <td>{{a.category}}</td> 
-                                <td>{{a.datetime}}</td> 
+                                <td>{{ a.datetime | dayFormat}}</td> 
                                 <td>{{a.amount}}</td> 
                                 <td><button class="btn btn-outline-success" @click="edit(a)">Edit</button></td>
                                 <td><button class="btn btn-outline-danger" @click="remove(index)">Remove</button></td> 
@@ -28,6 +28,10 @@
 </template>
 
 <script>
+var dayjs = require('dayjs');
+var isBetween = require('dayjs/plugin/isBetween');
+dayjs.extend(isBetween);
+
 export default {
   name: 'Grid',
   props: ['expenses', 'header'],
@@ -43,7 +47,16 @@ export default {
         edit: function(data){
             this.$emit('openmodal', data);
         }
-    }
+    },
+    filters: {
+        dayFormat: (date) => {
+            if (!date){
+                return null;
+            }
+            
+            return dayjs(date).format('DD MMM YYYY HH:mm');
+        }
+    },
 }
 </script>
 

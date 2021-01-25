@@ -56,15 +56,15 @@ export default {
         {
           id: "89qotnkwee9",
           amount: 5.0,
-          datetime: "2021-01-01 12:00",
-          category: "food",
+          datetime: dayjs("2021-01-01 12:00").toISOString(),
+          category: "Food",
           item: "lunch",
         },
         {
           id: "38yhtkja9w",
           amount: 9.0,
-          datetime: "2021-01-01 15:00",
-          category: "food",
+          datetime: dayjs("2021-01-01 15:00").toISOString(),
+          category: "Food",
           item: "starbuck coffee",
         },
       ],
@@ -85,7 +85,6 @@ export default {
         
       ];
       var totalstart =  dayjs().subtract(12, 'month');
-      //var totalend = moment();
       var list = [];
       for(var m=1; m<=12; m++){
         var d = totalstart.add(m, 'month');
